@@ -23,6 +23,8 @@ class ProductController extends Controller
 
         $products = ProductFilterService::filterProducts($request);
 
+//        return $products;
+
         return view('products.index', compact('products', 'variants'));
     }
 
