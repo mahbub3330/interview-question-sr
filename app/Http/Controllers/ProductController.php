@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ProductFilterService;
+use App\Http\Services\ProductVariantService;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantPrice;
@@ -15,10 +17,20 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('products.index');
+        $variants = ProductVariantService::productVariantOptions();
+
+        $products = ProductFilterService::filterProducts($request);
+
+        return view('products.index', compact('products', 'variants'));
     }
+
+
+//    public function filter(Request $request)
+//    {
+//
+//    }
 
     /**
      * Show the form for creating a new resource.
